@@ -1,0 +1,21 @@
+build website:
+  stage: build
+  image: node:10
+  script:
+    - npm install
+    - npm install -g gatsby-cli
+    - gatsby --version
+    - gatsby build
+  artifacts:
+    paths:
+      - public  
+
+deploy to s3:
+  stage: deploy
+  image: 
+    name: amazon/aws-cli
+    entrypoint: [""]
+  script:
+    - aws --version
+    - aws s3 rm s3://$S3_BUCKET --recursive
+    - aws s3 cp public s3://$S3_BUCKET --recursive
